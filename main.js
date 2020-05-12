@@ -1,76 +1,65 @@
 const ratioUsdToVnd = 23400.5;
 const ratioEurToVnd = 25331.28;
 const ratioEurToUsd = 1.08;
+let result = 0;
+let formatAmount = "";
+let fromCurrency = prompt("Which currency do you currently have? VND, USD, or EUR?");
+let amount = prompt("How much money do you want to convert?")
+let toCurrency = prompt("Which currency would you like to convert to? VND, USD, or EUR?")
 
-function vndToUsd(amountVnd) {
-    return ((amountVnd / ratioUsdToVnd).toFixed(2));
+function vndToUsd() {
+    return (amount / ratioUsdToVnd);
 }
 
-function vndToEur(amountVnd) {
-    return ((amountVnd / ratioEurToVnd).toFixed(2));
+function vndToEur() {
+    return (amount / ratioEurToVnd);
 }
 
-function eurToVnd(amountEur) {
-    return (amountEur * ratioEurToVnd);
+function eurToVnd() {
+    return (amount * ratioEurToVnd);
 }
 
-function eurToUsd(amountEur) {
-    return (amountEur * ratioEurToUsd);
+function eurToUsd() {
+    return (amount * ratioEurToUsd);
 }
 
-function usdToVnd(amountUsd) {
-    return (amountUsd * ratioUsdToVnd);
+function usdToVnd() {
+    return (amount * ratioUsdToVnd);
 }
 
-function usdToEur(amountUsd) {
-    return (amountUsd / ratioEurToUsd);
+function usdToEur() {
+    return (amount / ratioEurToUsd);
 }
 
-function formatUsd(type, value) {
+function formatCurrency(type, value) {
     const formatter = new Intl.NumberFormat(type, {
-      currency: 'USD',
+      currency: type,
       style: "currency"
     });
     return formatter.format(value);
-  }
-  
-  function formatVnd(type, value) {
-    const formatter = new Intl.NumberFormat(type, {
-      currency: 'VND',
-      style: "currency"
-    });
-    return formatter.format(value);
-  }
-  
-  function formatEur(type, value) {
-    const formatter = new Intl.NumberFormat(type, {
-      currency: 'EUR',
-      style: "currency"
-    });
-    return formatter.format(value);
-  }
+  }  
 
-  let fromCurrency = prompt("Which currency do you currently have? VND, USD, or EUR?");
-  let amount = prompt("How much money do you want to convert?")
-  let toCurrency = prompt("Which currency would you like to convert to? VND, USD, or EUR?")
-
-if (fromCurrency === "VND" && toCurrency === "USD") {
-    text =amount + " "+ fromCurrency + " in " + toCurrency + " is  " + formatUsd('en-US',vndToUsd(amount))
-}
-else if (fromCurrency === "VND" && toCurrency === "EUR") {
-    text =amount + " "+ fromCurrency + " in " + toCurrency + " is  " + formatEur('de-DE',vndToEur(amount))
-}
-else if (fromCurrency === "EUR" && toCurrency === "VND") {
-    text =amount + " "+ fromCurrency + " in " + toCurrency + " is  " + formatVnd('vi-VN',eurToVnd(amount))
-}
-else if (fromCurrency === "EUR" && toCurrency === "USD") {
-    text =amount + " "+ fromCurrency + " in " + toCurrency + " is  " + formatUsd('en-US',eurToUsd(amount))
-}
-else if (fromCurrency === "USD" && toCurrency === "VND") {
-    text =amount + " "+ fromCurrency + " in " + toCurrency + " is  " + formatVnd('vi-VN',usdToVnd(amount))
-}
-else if (fromCurrency === "USD" && toCurrency === "EUR") {
-    text =amount + " "+ fromCurrency + " in " + toCurrency + " is  " + formatEur('de-DE',usdToEur(amount))
+function converter () {
+    fromCurrency = fromCurrency.toUpperCase();
+    toCurrency = toCurrency.toUpperCase();
+    if(fromCurrency === "VND" && toCurrency === "USD") {
+        result = vndToUsd()
+    } else if(fromCurrency === "VND" && toCurrency === "EUR") {
+        result = vndToEur()
+    } else if(fromCurrency === "EUR" && toCurrency === "VND") {
+        result = eurToVnd()
+    } else if (fromCurrency === "EUR" && toCurrency === "USD") {
+        result = eurToUsd()
+    } else if (fromCurrency === "USD" && toCurrency === "VND") {
+        result = usdToVnd()
+    } else if (fromCurrency === "USD" && toCurrency === "EUR") {
+        result = usdToEur()
+    } else {
+        alert("Sorry, your currency is not supported. Please refresh and try again.")
+        return;
+    }
+    formatAmount = formatCurrency(toCurrency,result)
+    alert("The converted amount is: " + formatAmount);
 }
 
-
+converter()
